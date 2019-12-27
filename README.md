@@ -1,2 +1,3 @@
 # pytct
-Python interface to Transient Current Technique (TCT)
+This is a set of python utilities to read, manipulate and visualize data taken by PSTCT by Particulars.
+

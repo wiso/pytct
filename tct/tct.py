@@ -4,6 +4,11 @@ import numpy as np
 
 
 def read(filename):
+    """
+    Read a data file from PSTCT by Particulars. It returns two objects: metadata and data. Example:
+
+        medatada, data = read('filename.rtct')
+    """
     def read_fmt(f, fmt):
         struct_len = struct.calcsize(fmt)
         return struct.unpack(fmt, f.read(struct_len))

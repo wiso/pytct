@@ -60,6 +60,8 @@ def read(filename):
     elif metadata['filetype'] == 22:
         pass
 
+    metadata['status'] = 'OK'
+
     """
       // int ix; index valuex = event;
       //xyz values :
@@ -85,7 +87,13 @@ def read(filename):
         for iu2 in range(metadata['nu2']):
             tU1, tU2, tI1, tI2 = np.fromfile(f, dtype=np.float32, count=4)
             for ixyz in range(metadata['nx'] * metadata['ny'] * metadata['nz']):
-                x, y, z = np.fromfile(f, dtype=np.float32, count=3)
+                r = np.fromfile(f, dtype=np.float32, count=3)
+                try:
+                    x, y, z = r
+                except ValueError:
+                    print("file seems to be corrupted, read: %s, expected 3 floats, ignoring the rest of the file" % r)
+                    metadata['status'] = 'FAILED'
+                    break
                 beam_monitor = read_fmt(f, 'f')[0]
                 data['x'].append(x)
                 data['y'].append(y)
